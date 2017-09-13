@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<div class="container container-lg">
+    <div class="panel panel-primary panel-page-header">
+        <div class="panel-body">
+            <div class="content">
+                <h2><span th:text="#{site.account.settings}">Account Settings</span></h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-primary panel-widget" ng-if="user">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span th:text="#{site.user.details}">User Details</span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="content">
+                <table class="table table-hover table-striped">
+                    <tr><td><span th:text="#{site.username}">Username</span></td><td>{{user.username}}</td></tr>
+                    <tr><td><span th:text="#{site.password}">Password</span></td><td><input class="form-control" type="password" ng-model="user.password" /></td></tr>
+                    <tr><td><span th:text="#{site.password}">Confirm Password</span></td><td><input class="form-control" type="password" ng-model="confirmPassword.value"/></td></tr>
+                    <tr><td><span th:text="#{site.email}">Email</span></td><td><input class="form-control" type="text" ng-model="user.email" /></td></tr>
+                    <tr><td><span th:text="#{site.role}">Role</span></td><td>{{user.roles}}</td></tr>
+                    <tr><td><span th:text="#{site.activated}">Activated</span></td><td>{{user.enabled}}</td></tr>
+                </table>
+                <hr />
+                <table class="table table-hover table-striped">
+                    <tr><td><span>Skills</span></td><td>{{resumeSkills}}</td></tr>
+                    <tr><td><span>Education</span></td><td>{{resumeEducation}}</td></tr>
+                    <tr><td><span>Experience</span></td><td>{{resumeExperience}}</td></tr>
+                    <tr><td><span></span>Projects</span></td><td>{{resumeProjects}}</td></tr>
+                </table>
+                <hr />
+               
+                <button class="btn btn-success" ng-click="updateUser()"><span th:text="#{site.update.user.details}">Update User Details</span></button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<div class="container container-lg">
+    <div class="panel panel-primary panel-page-header">
+        <div class="panel-body">
+            <div class="content">
+                <h2><span th:text="#{site.users}"></span></h2>
+
+                <span th:text="#{site.back.to}"></span> <a href="#/admin/user-manage"><span th:text="#{site.list.of.users}"></span></a>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="panel panel-primary panel-widget">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span th:text="#{site.user.details}"></span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="content">
+
+                <table class="table table-hover table-striped" ng-if="user">
+                    <tr><td><span th:text="#{site.username}"></span></td><td>{{user.username}}</td></tr>
+                    <tr><td><span th:text="#{site.password}"></span></td><td>******</td></tr>
+                    <tr><td><span th:text="#{site.email}"></span></td><td>{{user.email}}</td></tr>
+                    <tr><td><span th:text="#{site.role}"></span></td><td>{{user.roles}}</td></tr>
+                    <tr><td><span th:text="#{site.activated}"></span></td><td>{{user.enabled}}</td></tr>
+
+
+                </table>
+
+                <button class="btn btn-success" ng-click="editUser()"><span th:text="#{site.edit.user}"></span></button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</html>

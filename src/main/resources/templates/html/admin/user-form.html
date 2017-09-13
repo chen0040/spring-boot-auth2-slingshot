@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<div class="container container-lg">
+    <div class="panel panel-primary panel-page-header">
+        <div class="panel-body">
+            <div class="content">
+                <!--<h2>{{user.valid ? "Edit" : "Create"}} <span th:text="#{site.user}">User</span></h2>-->
+
+                <h2 ng-hide="user.valid"><span th:text="#{site.create.user}"></span></h2>
+                <h2 ng-show="user.valid"><span th:text="#{site.edit.user}"></span></h2>
+
+                <!--<span th:text="#{site.back.to}"></span> <a href="#/admin/user-manage"><span th:text="#{site.list.of.users}"></span></a>-->
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-primary panel-widget">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title pull-left">
+                <span th:text="#{site.user.details}"></span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="content">
+                <table class="table table-hover table-striped">
+                    <tr><td><span th:text="#{site.username}"></span></td><td><input class="form-control" type="text" ng-model="user.username" /></td></tr>
+                    <tr><td><span th:text="#{site.password}"></span></td><td><input class="form-control" type="password" ng-model="user.password" /></td></tr>
+                    <tr><td><span th:text="#{site.email}"></span></td><td><input class="form-control" type="text" ng-model="user.email" /></td></tr>
+                    <tr ng-if="user.username != 'admin'"><td><span th:text="#{site.role}"></span></td><td>
+                        <select class="form-control" ng-model="user.roles">
+                            <option>ROLE_USER</option>
+                            <option>ROLE_USER,ROLE_DEMO</option>
+                            <option>ROLE_USER,ROLE_ADMIN</option>
+                        </select></td>
+                    </tr>
+
+                    <tr ng-if="user.username != 'admin'"><td><span th:text="#{site.activated}"></span></td><td><input class="form-control" type="checkbox" ng-model="user.enabled" /></td></tr>
+
+
+                </table>
+
+                <button class="btn btn-success" ng-click="updateUser()"><span th:text="#{site.save}"></span></button>
+                <button class="btn btn-success" ng-click="cancelEditUser()"><span th:text="#{site.cancel}"></span></button>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+</html>
