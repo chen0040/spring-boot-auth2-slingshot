@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="#{site.app_name}">Home</title>
-    <link href="/css/app-login.style.css" rel="stylesheet" />
-    <link href="/jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/jslib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <link href="/jslib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -33,13 +33,20 @@
                     <input class="form-control" id="password" type="password" name="password" th:placeholder="#{site.password}" />
                 </div>
 
-                <div class="cold-md-12 m-t-20 text-center">
+                <div class="col-md-12 m-t-20 text-center">
                     <div class="form-group">
                         <button type="submit" id="login"
                                 class="btn btn-lg btn-primary btn-block btn-signin" tabindex="3">
                             <span th:text='#{site.login}'>Login</span>
                         </button>
                     </div>
+                </div>
+
+                <div class="col-md-12 m-t-20 text-center">
+                    <div class="form-group">
+                        With Facebook: <a href="/login/facebook">click here</a>
+                    </div>
+
                 </div>
 
 

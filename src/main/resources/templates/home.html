@@ -2,8 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title th:text="#{site.app_name}">Home</title>
-    <link href="/jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/jslib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 
     <link href="/jslib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="/jslib/toastr/toastr.min.css" rel="stylesheet" />
@@ -149,8 +151,6 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
 <script src="/webjars/sockjs-client/0.3.4/sockjs.min.js"></script>
 
-
-<script src="/jslib/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/jslib/toastr/toastr.min.js" type="text/javascript"></script>
 <script src="/jslib/stompjs/stomp.js" type="text/javascript"></script>
 

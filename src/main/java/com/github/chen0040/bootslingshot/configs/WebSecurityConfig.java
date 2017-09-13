@@ -3,12 +3,25 @@ package com.github.chen0040.bootslingshot.configs;
 import com.github.chen0040.bootslingshot.components.SpringAuthenticationSuccessHandler;
 import com.github.chen0040.bootslingshot.services.SpringUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import javax.servlet.Filter;
 
 
 /**
@@ -16,11 +29,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 
 @Configuration
+@EnableOAuth2Client
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
    @Autowired
    private SpringUserDetailService userDetailService;
+
+   @Autowired
+   private OAuth2ClientContext oauth2ClientContext;
 
 
    @Autowired
@@ -35,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
       http
               .authorizeRequests()
-
+              .antMatchers("/", "/login**", "/webjars/**").permitAll()
               .antMatchers("/js/client/**").hasAnyRole("USER", "ADMIN")
               .antMatchers("/js/admin/**").hasAnyRole("ADMIN")
               .antMatchers("/admin/**").hasAnyRole("ADMIN")
@@ -69,7 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
               .and()
               .logout()
               .permitAll()
-              .and()
+              .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
               .csrf()
               .disable();
               //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
@@ -81,5 +98,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
       auth.userDetailsService(userDetailService)
               .passwordEncoder(new BCryptPasswordEncoder());
+   }
+
+   private Filter ssoFilter() {
+      OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/facebook");
+      OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
+      facebookFilter.setRestTemplate(facebookTemplate);
+      UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId());
+      tokenServices.setRestTemplate(facebookTemplate);
+      facebookFilter.setTokenServices(tokenServices);
+      return facebookFilter;
+   }
+
+   @Bean
+   @ConfigurationProperties("facebook.client")
+   public AuthorizationCodeResourceDetails facebook() {
+      return new AuthorizationCodeResourceDetails();
+   }
+
+   @Bean
+   @ConfigurationProperties("facebook.resource")
+   public ResourceServerProperties facebookResource() {
+      return new ResourceServerProperties();
+   }
+
+   @Bean
+   public FilterRegistrationBean oauth2ClientFilterRegistration(
+           OAuth2ClientContextFilter filter) {
+      FilterRegistrationBean registration = new FilterRegistrationBean();
+      registration.setFilter(filter);
+      registration.setOrder(-100);
+      return registration;
    }
 }
