@@ -13,7 +13,7 @@ The details of Auth2 with Spring can be found at this [link](https://spring.io/g
 * Websocket + sockjs + stompjs
 * Bootstrap + thymeleaf
 * Language (cn + en)
-* Signup and Login using Auth2 
+* Signup and Login using Auth2 (Login using Facebook account or Github account)
 
 # Configuration
 
