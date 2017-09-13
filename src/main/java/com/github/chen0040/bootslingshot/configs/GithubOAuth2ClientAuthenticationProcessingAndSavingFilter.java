@@ -2,6 +2,8 @@ package com.github.chen0040.bootslingshot.configs;
 
 
 import com.github.chen0040.bootslingshot.components.SpringAuthentication;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -14,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -26,6 +29,8 @@ class GithubOAuth2ClientAuthenticationProcessingAndSavingFilter extends OAuth2Cl
 
    @Autowired
    private RestTemplate restTemplate;
+
+   private ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
 
    public GithubOAuth2ClientAuthenticationProcessingAndSavingFilter(String defaultFilterProcessesUrl) {
       super(defaultFilterProcessesUrl);

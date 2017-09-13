@@ -14,6 +14,7 @@ The details of Auth2 with Spring can be found at this [link](https://spring.io/g
 * Bootstrap + thymeleaf
 * Language (cn + en)
 * Signup and Login using Auth2 (Login using Facebook account or Github account)
+* Developer can retrieves facebook information about the login user using class such as FacebookOAuth2ClientAuthenticationProcessingAndSavingFilter
 
 # Configuration
 
@@ -45,6 +46,19 @@ DEMO:
 
 * username: demo
 * password: demo
+
+To start the application, run the make.ps1 in powershell to build the jar bin/spring-boot-slingshot.jar and run the following
+command:
+
+```bash
+java -jar bin/spring-boot-slingshot.jar
+```
+
+Now navigate to localhost:8080 in your browser.
+
+The main class is SpringSlingshotApplication.
+
+
 
 
 
